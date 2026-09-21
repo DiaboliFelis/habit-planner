@@ -1,11 +1,28 @@
-<h1>Update your password</h1>
+<div class="auth-container">
+  <h1>🔒 Новый пароль</h1>
 
-<% if flash[:alert] %>
-  <div style="color:red"><%= flash[:alert] %></div>
-<% end %>
+  <% if flash[:alert] %>
+    <div class="alert"><%= flash[:alert] %></div>
+  <% end %>
+  <% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+  <% end %>
 
-<%= form_with url: password_path(params[:token]), method: :put do |form| %>
-  <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72 %><br>
-  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %><br>
-  <%= form.submit "Save" %>
-<% end %>
+  <%= form_with url: password_path(params[:token]), method: :put do |form| %>
+    <div class="field">
+      <%= form.label :password, "Новый пароль" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72 %>
+    </div>
+
+    <div class="field">
+      <%= form.label :password_confirmation, "Повторите пароль" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72 %>
+    </div>
+
+    <%= form.submit "Сохранить пароль" %>
+  <% end %>
+
+  <div class="links">
+    <%= link_to "Вернуться ко входу", new_session_path %>
+  </div>
+</div>

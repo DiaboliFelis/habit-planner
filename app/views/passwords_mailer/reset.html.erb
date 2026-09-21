@@ -1,6 +1,90 @@
-<p>
-  You can reset your password on
-  <%= link_to "this password reset page", edit_password_url(@user.password_reset_token) %>.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #f7fafc;
+        margin: 0;
+        padding: 40px 20px;
+        color: #2d3748;
+      }
+      .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+      .logo {
+        text-align: center;
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 22px;
+        color: #2d3748;
+        margin-bottom: 20px;
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #4a5568;
+        margin-bottom: 20px;
+      }
+      .button {
+        display: block;
+        text-align: center;
+        background: #667eea;
+        color: white !important;
+        text-decoration: none;
+        padding: 14px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 16px;
+        margin: 30px 0;
+      }
+      .button:hover {
+        background: #5568d3;
+      }
+      .hint {
+        font-size: 13px;
+        color: #718096;
+        text-align: center;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 20px;
+      }
+      .link-fallback {
+        word-break: break-all;
+        font-size: 12px;
+        color: #a0aec0;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">🌱</div>
+      <h1>Сброс пароля</h1>
 
-  This link will expire in <%= distance_of_time_in_words(0, @user.password_reset_token_expires_in) %>.
-</p>
+      <p>Привет, <%= @user.name || @user.email_address %>!</p>
+
+      <p>Вы запросили сброс пароля для вашего аккаунта в «Планировщике дня и привычек». Чтобы установить новый пароль, нажмите на кнопку ниже:</p>
+
+      <%= link_to "Сбросить пароль", edit_password_url(@user.password_reset_token), class: "button" %>
+
+      <p class="hint">
+        Ссылка действительна в течение <%= distance_of_time_in_words(0, @user.password_reset_token_expires_in) %>.<br>
+        Если вы не запрашивали сброс пароля — просто проигнорируйте это письмо.
+      </p>
+
+      <p class="link-fallback">
+        Если кнопка не работает, скопируйте ссылку:<br>
+        <%= edit_password_url(@user.password_reset_token) %>
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,16 @@
-You can reset your password on
+СБРОС ПАРОЛЯ
+============
+
+Привет, <%= @user.name || @user.email_address %>!
+
+Вы запросили сброс пароля для вашего аккаунта в «Планировщике дня и привычек».
+
+Чтобы установить новый пароль, перейдите по ссылке:
 <%= edit_password_url(@user.password_reset_token) %>
 
-This link will expire in <%= distance_of_time_in_words(0, @user.password_reset_token_expires_in) %>.
+Ссылка действительна в течение <%= distance_of_time_in_words(0, @user.password_reset_token_expires_in) %>.
+
+Если вы не запрашивали сброс пароля — просто проигнорируйте это письмо.
+
+—
+Планировщик дня и привычек 🌱
