@@ -1,0 +1,10 @@
+<h1>🌱 Планировщик дня и привычек</h1>
+
+<% if authenticated? %>
+  <p>Привет, <%= Current.user.name || Current.user.email_address %>!</p>
+  <%= link_to "Выйти", session_path, data: { turbo_method: :delete } %>
+<% else %>
+  <p>Добро пожаловать!</p>
+  <%= link_to "Войти", new_session_path %> |
+  <%= link_to "Зарегистрироваться", new_registration_path %>
+<% end %>
