@@ -24,6 +24,9 @@
   </head>
 
   <body>
-    <%= yield %>
+  <% if authenticated? %>
+    <%= render "shared/sidebar" %>
+  <% end %>
+  <%= yield %>
   </body>
 </html>

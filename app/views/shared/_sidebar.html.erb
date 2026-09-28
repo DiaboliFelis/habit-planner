@@ -1,0 +1,28 @@
+<aside class="sidebar">
+  <%= link_to root_path, class: "sidebar-logo" do %>
+    🌱 Планировщик
+  <% end %>
+
+  <nav class="sidebar-nav">
+    <%= link_to root_path, class: "sidebar-item #{'active' if current_page?(root_path)}" do %>
+      <span class="icon">📅</span>
+      <span>Календарь</span>
+    <% end %>
+
+    <%= link_to "#", class: "sidebar-item" do %>
+      <span class="icon">🌱</span>
+      <span>Сад привычек</span>
+    <% end %>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <span>👤</span>
+      <span><%= Current.user.name || Current.user.email_address %></span>
+    </div>
+    <%= link_to session_path, data: { turbo_method: :delete }, class: "sidebar-item" do %>
+      <span class="icon">⏻</span>
+      <span>Выйти</span>
+    <% end %>
+  </div>
+</aside>

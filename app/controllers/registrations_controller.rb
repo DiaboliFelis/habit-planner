@@ -2,7 +2,7 @@ class RegistrationsController < ApplicationController
   allow_unauthenticated_access only: %i[ new create ]
 
   def new
-    @user = User.new
+    @user = User.new  # создаём пустого пользователя
   end
 
   def create

@@ -1,17 +1,57 @@
-<div class="dashboard">
-  <header class="dashboard-header">
-    <h1>🌱 Планировщик дня и привычек</h1>
-    <div class="user-info">
-      <span>Привет, <%= Current.user.name || Current.user.email_address %>!</span>
-      <%= link_to "Выйти", session_path, data: { turbo_method: :delete }, class: "logout-btn" %>
+<div class="page-container">
+  <%# Шапка %>
+  <header class="page-header">
+    <div class="page-header-left">
+      <h1 class="page-header-title">🌱 Планировщик</h1>
+    </div>
+    <div class="page-header-left">
+      <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
+        <%= (Current.user.name || Current.user.email_address).first.upcase %>
+      </button>
     </div>
   </header>
 
-  <main class="dashboard-content">
-    <div class="empty-state">
-      <div class="empty-icon">🌱</div>
-      <h2>Главный экран</h2>
-      <p>Здесь скоро появятся твои привычки, расписание и сад</p>
+  <%# Календарь %>
+  <div class="calendar">
+    <div class="calendar-header">
+      <%= link_to "←", root_path(date: @prev_month), class: "calendar-nav" %>
+      <div class="calendar-title">
+        <%= l(@date, format: "%B %Y") %>
+      </div>
+      <%= link_to "→", root_path(date: @next_month), class: "calendar-nav" %>
     </div>
-  </main>
+
+    <div class="calendar-weekdays">
+      <% %w[Пн Вт Ср Чт Пт Сб Вс].each do |day| %>
+        <div class="calendar-weekday"><%= day %></div>
+      <% end %>
+    </div>
+
+    <div class="calendar-grid">
+      <%# Пустые ячейки до первого дня месяца %>
+      <% first_wday = @month_start.wday == 0 ? 6 : @month_start.wday - 1 %>
+      <% first_wday.times do %>
+        <div class="calendar-day other-month"></div>
+      <% end %>
+
+      <%# Дни месяца %>
+      <% @days.each do |day| %>
+        <%= link_to day.day, 
+            root_path(date: day), 
+            class: "calendar-day #{'today' if day == Date.today}" %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Нижняя навигация %>
+  <nav class="bottom-nav">
+    <%= link_to root_path, class: "bottom-nav-item active" do %>
+      <span class="icon">📅</span>
+      <span>День</span>
+    <% end %>
+    <%= link_to "#", class: "bottom-nav-item" do %>
+      <span class="icon">🌱</span>
+      <span>Сад</span>
+    <% end %>
+  </nav>
 </div>
