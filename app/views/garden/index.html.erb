@@ -1,12 +1,13 @@
 <div class="page-container">
   <header class="page-header">
-    <div class="page-header-left">
-      <h1 class="page-header-title">🌱 Сад привычек</h1>
-    </div>
-    <div class="page-header-left">
-      <%= link_to "#", class: "btn btn-primary" do %>
-        <span>+</span> Добавить свою
-      <% end %>
+  <div class="page-header-left">
+    <%= back_button %>
+    <h1 class="page-header-title">🌱 Сад привычек</h1>
+  </div>
+  <div class="page-header-left">
+      <button class="btn btn-primary" data-action="click->modal#open">
+  <span>+</span> <span class="btn-label">Добавить свою</span>
+</button>
       <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
         <%= (Current.user.name || Current.user.email_address).first.upcase %>
       </button>
