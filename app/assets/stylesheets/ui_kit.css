@@ -596,6 +596,7 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
   .page-container {
     margin-left: 240px;
     max-width: calc(100% - 240px);
+
     padding-bottom: var(--space-lg);
   }
 

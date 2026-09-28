@@ -1,0 +1,13 @@
+<nav class="bottom-nav">
+  <%= link_to day_path(Date.today.strftime("%Y-%m-%d")), 
+      class: "bottom-nav-item #{'active' if current_page?(day_path(Date.today.strftime("%Y-%m-%d")))}" do %>
+    <span class="icon">📅</span>
+    <span>День</span>
+  <% end %>
+
+  <%= link_to garden_path, 
+      class: "bottom-nav-item #{'active' if current_page?(garden_path) || current_page?(garden_laboratory_path) || current_page?(garden_almanac_path)}" do %>
+    <span class="icon">🌱</span>
+    <span>Сад</span>
+  <% end %>
+</nav>

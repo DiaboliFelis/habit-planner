@@ -28,5 +28,8 @@
     <%= render "shared/sidebar" %>
   <% end %>
   <%= yield %>
-  </body>
+  <% if authenticated? %>
+    <%= render "shared/bottom_nav" %>
+  <% end %>
+</body>
 </html>
