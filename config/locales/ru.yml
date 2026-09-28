@@ -1,33 +1,71 @@
 ru:
   date:
-    month_names:
-      - ~
-      - Январь
-      - Февраль
-      - Март
-      - Апрель
-      - Май
-      - Июнь
-      - Июль
-      - Август
-      - Сентябрь
-      - Октябрь
-      - Ноябрь
-      - Декабрь
-    abbr_month_names:
-      - ~
-      - Янв
-      - Фев
-      - Мар
-      - Апр
-      - Май
-      - Июн
-      - Июл
-      - Авг
-      - Сен
-      - Окт
-      - Ноя
-      - Дек
-  time:
     formats:
       default: "%d.%m.%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+      day_month: "%d %B"
+    month_names:
+      - ~
+      - января
+      - февраля
+      - марта
+      - апреля
+      - мая
+      - июня
+      - июля
+      - августа
+      - сентября
+      - октября
+      - ноября
+      - декабря
+    abbr_month_names:
+      - ~
+      - янв
+      - фев
+      - мар
+      - апр
+      - май
+      - июн
+      - июл
+      - авг
+      - сен
+      - окт
+      - ноя
+      - дек
+    day_names:
+      - воскресенье
+      - понедельник
+      - вторник
+      - среда
+      - четверг
+      - пятница
+      - суббота
+    abbr_day_names:
+      - вс
+      - пн
+      - вт
+      - ср
+      - чт
+      - пт
+      - сб
+  time:
+    formats:
+      default: "%d.%m.%Y %H:%M"
+      short: "%d %b, %H:%M"
+  activerecord:
+    models:
+      user: "Пользователь"
+      event: "Событие"
+      habit: "Привычка"
+    attributes:
+      user:
+        name: "Имя"
+        email_address: "Email"
+        password: "Пароль"
+        password_confirmation: "Повтор пароля"
+      event:
+        title: "Название"
+        description: "Описание"
+        start_time: "Время начала"
+        end_time: "Время окончания"

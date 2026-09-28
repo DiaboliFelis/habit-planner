@@ -1,0 +1,87 @@
+<div class="page-container" data-controller="modal">
+  <header class="page-header">
+    <div class="page-header-left">
+      <%= link_to "←", root_path, class: "btn-icon back-btn", title: "Назад" %>
+      <div>
+        <h1 class="page-header-title"><%= l(@date, format: "%-d %B") %></h1>
+        <p class="text-muted text-small"><%= l(@date, format: "%A").capitalize %></p>
+      </div>
+    </div>
+    <div class="page-header-left">
+      <button class="btn btn-primary btn-add" data-action="click->modal#open">
+        <span>+</span>
+        <span class="btn-label">Добавить</span>
+      </button>
+      <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
+        <%= (Current.user.name || Current.user.email_address).first.upcase %>
+      </button>
+    </div>
+  </header>
+
+  <%# Список событий %>
+  <div class="day-events">
+    <h2 class="day-section-title">📅 События</h2>
+
+    <% if @events.any? %>
+      <% @events.each do |event| %>
+        <div class="event-card">
+          <div class="event-time">
+            <%= event.start_time.strftime("%H:%M") %>–<%= event.end_time.strftime("%H:%M") %>
+          </div>
+          <div class="event-title"><%= event.title %></div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <div class="empty-icon">📅</div>
+        <h2>На этот день пока ничего нет</h2>
+        <p>Добавь событие — оно появится здесь</p>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Модальное окно %>
+  <div class="modal-overlay"
+       data-modal-target="overlay"
+       data-action="click->modal#closeOnBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Новое событие</h2>
+        <button class="modal-close" data-action="click->modal#close" title="Закрыть">×</button>
+      </div>
+
+      <%= form_with model: Event.new, url: events_path, method: :post do |form| %>
+        <%= hidden_field_tag :date, @date.strftime("%Y-%m-%d") %>
+
+        <div class="form-field">
+          <%= form.label :title, "Название" %>
+          <%= form.text_field :title, required: true, placeholder: "Например: Лекция по матану" %>
+        </div>
+
+        <div class="form-field">
+          <%= form.label :description, "Описание (необязательно)" %>
+          <%= form.text_area :description, rows: 2, placeholder: "Детали" %>
+        </div>
+
+        <div class="form-field">
+          <%= form.label :start_time, "Начало" %>
+          <%= form.datetime_field :start_time, 
+              value: @date.strftime("%Y-%m-%dT09:00"), required: true %>
+        </div>
+
+        <div class="form-field">
+          <%= form.label :end_time, "Окончание" %>
+          <%= form.datetime_field :end_time, 
+              value: @date.strftime("%Y-%m-%dT10:00"), required: true %>
+        </div>
+
+        <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-lg);">
+          <button type="button" class="btn btn-secondary btn-block" data-action="click->modal#close">
+            Отмена
+          </button>
+          <%= form.submit "Создать", class: "btn btn-primary btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

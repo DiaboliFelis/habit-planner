@@ -37,8 +37,8 @@
       <%# Дни месяца %>
       <% @days.each do |day| %>
         <%= link_to day.day, 
-            root_path(date: day), 
-            class: "calendar-day #{'today' if day == Date.today}" %>
+    day_path(day.strftime("%Y-%m-%d")), 
+    class: "calendar-day #{'today' if day == Date.today}" %>
       <% end %>
     </div>
   </div>
