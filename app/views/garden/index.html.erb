@@ -1,0 +1,26 @@
+<div class="page-container">
+  <header class="page-header">
+    <div class="page-header-left">
+      <h1 class="page-header-title">🌱 Сад привычек</h1>
+    </div>
+    <div class="page-header-left">
+      <%= link_to "#", class: "btn btn-primary" do %>
+        <span>+</span> Добавить свою
+      <% end %>
+      <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
+        <%= (Current.user.name || Current.user.email_address).first.upcase %>
+      </button>
+    </div>
+  </header>
+
+  <%= render "tabs" %>
+
+  <div class="garden-card">
+    <div class="empty-state">
+      <div class="empty-icon">🌱</div>
+      <h2>У тебя пока нет привычек</h2>
+      <p>Создай свою первую привычку или выбери из лаборатории</p>
+      <%= link_to "Открыть лабораторию", garden_laboratory_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

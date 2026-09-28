@@ -1,0 +1,22 @@
+<div class="page-container">
+  <header class="page-header">
+    <div class="page-header-left">
+      <h1 class="page-header-title">🧪 Лаборатория привычек</h1>
+    </div>
+    <div class="page-header-left">
+      <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
+        <%= (Current.user.name || Current.user.email_address).first.upcase %>
+      </button>
+    </div>
+  </header>
+
+  <%= render "tabs" %>
+
+  <div class="garden-card">
+    <div class="empty-state">
+      <div class="empty-icon">🧪</div>
+      <h2>Здесь будут готовые привычки</h2>
+      <p>Скоро мы добавим каталог с описанием и пользой</p>
+    </div>
+  </div>
+</div>

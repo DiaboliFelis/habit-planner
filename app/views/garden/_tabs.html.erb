@@ -1,0 +1,19 @@
+<div class="garden-tabs">
+  <%= link_to garden_path,
+      class: "garden-tab #{'active' if current_page?(garden_path)}" do %>
+    <span class="icon">🌱</span>
+    <span>Сад</span>
+  <% end %>
+
+  <%= link_to garden_laboratory_path,
+      class: "garden-tab #{'active' if current_page?(garden_laboratory_path)}" do %>
+    <span class="icon">🧪</span>
+    <span>Лаборатория</span>
+  <% end %>
+
+  <%= link_to garden_almanac_path,
+      class: "garden-tab #{'active' if current_page?(garden_almanac_path)}" do %>
+    <span class="icon">📊</span>
+    <span>Альманах</span>
+  <% end %>
+</div>

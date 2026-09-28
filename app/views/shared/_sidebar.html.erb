@@ -9,9 +9,25 @@
       <span>Календарь</span>
     <% end %>
 
-    <%= link_to "#", class: "sidebar-item" do %>
+    <%# Сад привычек + подпункты %>
+    <%= link_to garden_path, class: "sidebar-item #{'active' if current_page?(garden_path) && !current_page?(garden_laboratory_path) && !current_page?(garden_almanac_path)}" do %>
       <span class="icon">🌱</span>
       <span>Сад привычек</span>
+    <% end %>
+
+    <%# Подпункты — показываем только когда мы в разделе "Сад" %>
+    <% if current_page?(garden_path) || current_page?(garden_laboratory_path) || current_page?(garden_almanac_path) %>
+      <div class="sidebar-submenu">
+        <%= link_to garden_laboratory_path, class: "sidebar-subitem #{'active' if current_page?(garden_laboratory_path)}" do %>
+          <span class="icon">🧪</span>
+          <span>Лаборатория</span>
+        <% end %>
+
+        <%= link_to garden_almanac_path, class: "sidebar-subitem #{'active' if current_page?(garden_almanac_path)}" do %>
+          <span class="icon">📊</span>
+          <span>Альманах</span>
+        <% end %>
+      </div>
     <% end %>
   </nav>
 
