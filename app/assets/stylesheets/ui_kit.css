@@ -1165,3 +1165,27 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
 .habit-card.wilted h3 {
   color: var(--color-text-muted);
 }
+
+/* ------------------------------------------------------------
+   26. КНОПКА УДАЛЕНИЯ
+   ------------------------------------------------------------ */
+.btn-icon-danger {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border-radius: var(--radius-full);
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-icon-danger:hover {
+  background: var(--color-danger);
+  color: white;
+}

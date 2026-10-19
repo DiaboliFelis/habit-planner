@@ -37,12 +37,18 @@
               </div>
             </div>
 
-            <div>
+                         <div style="display: flex; align-items: center; gap: 8px;">
               <% if habit.completed_today? %>
                 <span class="badge-success">Выполнено ✅</span>
               <% else %>
                 <%= button_to "Выполнено", complete_habit_path(habit), method: :patch, class: "btn btn-primary btn-sm" %>
               <% end %>
+              
+              <%= button_to "×", habit_path(habit), 
+                  method: :delete, 
+                  class: "btn btn-danger btn-sm btn-icon-danger", 
+                  title: "Удалить",
+                  data: { turbo_confirm: "Точно удалить привычку?" } %>
             </div>
 
           </div>

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resource :calendar, only: [ :show ]
   resources :events, only: [ :create ]
-  resources :habits, only: [ :create ] do
+  resources :habits, only: [ :create, :destroy ] do
   member do
     patch :complete
   end

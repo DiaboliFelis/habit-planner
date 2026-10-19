@@ -19,6 +19,12 @@ class HabitsController < ApplicationController
     end
   end
 
+    def destroy
+    @habit = Current.user.habits.find(params[:id])
+    @habit.destroy
+    redirect_to garden_path, notice: "Привычка удалена."
+  end
+
   private
 
   def habit_params
