@@ -1,0 +1,15 @@
+one:
+  name: Чтение
+  goal: 20 страниц в день
+  frequency: 1
+  target_time: 2026-10-19 14:00:00
+  current_streak: 5
+  user: one
+
+two:
+  name: Бег
+  goal: 3 километра
+  frequency: 1
+  target_time: 2026-10-19 08:00:00
+  current_streak: 2
+  user: two

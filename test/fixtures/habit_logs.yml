@@ -1,0 +1,9 @@
+one:
+  habit: one
+  completed_at: <%= Time.current %>
+  status: 0
+
+two:
+  habit: two
+  completed_at: <%= Time.current - 1.day %>
+  status: 0
