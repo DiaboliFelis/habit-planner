@@ -3,7 +3,6 @@ class HabitLog < ApplicationRecord
   enum :status, { completed: 0, skipped: 1 }
   validates :completed_at, presence: true
 
-  # Значение по умолчанию
   after_initialize :set_default_status, if: :new_record?
 
   private

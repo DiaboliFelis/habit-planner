@@ -7,42 +7,47 @@ class Habit < ApplicationRecord
 
   after_initialize :set_default_streak, if: :new_record?
 
-  # проверка на увядание
+  # 🥀 Проверка на увядание
   def wilted?
-    # Если привычку ни разу не выполняли, но она создана давно (например, больше 3 дней назад)
     if last_completed_at.nil?
       created_at < 3.days.ago
     else
-      # Если выполняли, но последний раз больше 3 дней назад
       last_completed_at < 3.days.ago
     end
   end
 
-    def plant_emoji
+  # 🌿 Выбор эмодзи
+  def plant_emoji
     if wilted?
-      "🥀" # Увядший цветок
+      "🥀"
     else
       case current_streak
-      when 0 then "🟤" # Земля
-      when 1..3 then "🌱" # Росток
-      when 4..7 then "🌿" # Зелёное растение
-      when 8..14 then "🌻" # Цветок
-      else "🌳" # Дерево
+      when 0 then "🟤"
+      when 1..3 then "🌱"
+      when 4..7 then "🌿"
+      when 8..14 then "🌻"
+      else "🌳"
       end
     end
   end
 
+  # ✅ Отметить выполнение
   def mark_as_completed!
+    # 1. Проверяем, не нужно ли сбросить стрик из-за пропуска
+    reset_streak_if_missed!
+
+    # 2. Создаем лог и увеличиваем стрик
     habit_logs.create!(completed_at: Time.current, status: :completed)
     increment!(:current_streak)
-    # Обновляем дату последнего выполнения
     update!(last_completed_at: Time.current)
   end
 
+  # 🕒 Проверка "выполнено ли сегодня"
   def completed_today?
     habit_logs.where(completed_at: Time.current.beginning_of_day..Time.current.end_of_day).exists?
   end
 
+  # 🔄 Сброс стрика в 0
   def reset_streak!
     update!(current_streak: 0)
   end
@@ -51,5 +56,14 @@ class Habit < ApplicationRecord
 
   def set_default_streak
     self.current_streak ||= 0
+  end
+
+  # 🧠 Бизнес-логика сброса: если последнее выполнение было не вчера и не сегодня
+  def reset_streak_if_missed!
+    return if last_completed_at.nil?
+
+    if last_completed_at.to_date < Date.yesterday
+      reset_streak!
+    end
   end
 end

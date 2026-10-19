@@ -64,4 +64,22 @@ class HabitTest < ActiveSupport::TestCase
     habit = Habit.new(name: "Тест", frequency: 0, user: @user)
     assert_not habit.save
   end
+
+      test "mark_as_completed! сбрасывает стрик, если был пропуск более 1 дня" do
+    @habit.update!(current_streak: 5, last_completed_at: 3.days.ago.to_date)
+
+    @habit.mark_as_completed!
+
+    # Стрик должен сброситься в 0, а потом увеличиться на 1
+    assert_equal 1, @habit.current_streak
+  end
+
+  test "mark_as_completed! не сбрасывает стрик, если выполнял вчера" do
+    @habit.update!(current_streak: 5, last_completed_at: 1.day.ago)
+
+    @habit.mark_as_completed!
+
+    # Стрик должен просто увеличиться на 1
+    assert_equal 6, @habit.current_streak
+  end
 end
