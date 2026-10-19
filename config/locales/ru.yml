@@ -69,3 +69,15 @@ ru:
         description: "Описание"
         start_time: "Время начала"
         end_time: "Время окончания"
+      habit:
+        name: "Название"
+        goal: "Цель"
+        frequency: "Частота"
+    errors:
+      models:
+        habit:
+          attributes:
+            name:
+              blank: "не может быть пустым"
+            frequency:
+              greater_than: "должна быть больше 0"
