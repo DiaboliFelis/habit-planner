@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_19_055154) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_19_065114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,11 +34,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_19_055154) do
     t.index ["habit_id"], name: "index_habit_logs_on_habit_id"
   end
 
+  create_table "habit_templates", force: :cascade do |t|
+    t.text "benefits"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "icon"
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "habits", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "current_streak"
     t.integer "frequency"
     t.string "goal"
+    t.datetime "last_completed_at"
     t.string "name"
     t.time "target_time"
     t.datetime "updated_at", null: false

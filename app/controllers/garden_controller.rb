@@ -4,8 +4,10 @@ class GardenController < ApplicationController
   end
 
   def laboratory
+    @templates = HabitTemplate.all
   end
 
   def almanac
+    @habits = Current.user.habits
   end
 end

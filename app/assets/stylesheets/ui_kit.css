@@ -1018,6 +1018,7 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  width: 100%;
 }
 
 .habit-card {
@@ -1029,6 +1030,11 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   transition: transform 0.2s, box-shadow 0.2s;
+  
+  /* Вот эти три строчки спасут layout */
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap; /* Чтобы на телефоне элементы переносились */
 }
 
 .habit-card:hover {
@@ -1040,12 +1046,17 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  flex: 1; /* Занимает всё свободное место */
+  min-width: 0; /* Позволяет тексту сжиматься */
 }
 
 .habit-info h3 {
   margin: 0;
   font-size: var(--font-size-base);
   color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .badge-success {
@@ -1061,13 +1072,14 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
 .btn-sm {
   padding: 8px 16px;
   font-size: var(--font-size-sm);
+  white-space: nowrap;
 }
 
 /* Адаптив для карточек привычек */
 @media (max-width: 767px) {
   .habit-card {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: var(--space-sm);
   }
   
@@ -1099,4 +1111,57 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
 .plant-pot .plant {
   font-size: 28px;
   line-height: 1;
+}
+
+/* ------------------------------------------------------------
+   24. АЛЬМАНАХ (статистика)
+   ------------------------------------------------------------ */
+.almanac-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.stat-box {
+  background: var(--color-bg);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  text-align: center;
+  border: 1px solid var(--color-border);
+}
+
+.stat-value {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+@media (max-width: 767px) {
+  .almanac-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------
+   25. УВЯДШИЕ ПРИВЫЧКИ
+   ------------------------------------------------------------ */
+.habit-card.wilted {
+  opacity: 0.7;
+  background: #fdf2f2; /* Легкий красноватый фон */
+  border-color: #feb2b2;
+}
+
+.habit-card.wilted .plant {
+  filter: grayscale(80%);
+}
+
+.habit-card.wilted h3 {
+  color: var(--color-text-muted);
 }

@@ -20,16 +20,23 @@
     <% if @habits.any? %>
       <div class="habits-list">
         <% @habits.each do |habit| %>
-          <div class="habit-card">
+          <div class="habit-card <%= 'wilted' if habit.wilted? %>">
+            
             <div class="habit-info">
               <div class="plant-pot">
-                <span class="plant"><%= (habit.current_streak || 0) > 0 ? "🌿" : "🪴" %></span>
+                <span class="plant"><%= habit.plant_emoji %></span>
               </div>
               <div>
                 <h3><%= habit.name %></h3>
-                <p class="text-muted text-small">Стрик: <%= habit.current_streak || 0 %> дней</p>
+                <p class="text-muted text-small">
+                  Стрик: <%= habit.current_streak || 0 %> дней
+                  <% if habit.wilted? %>
+                    <span style="color: var(--color-danger); font-weight: 600;"> (Увяло)</span>
+                  <% end %>
+                </p>
               </div>
             </div>
+
             <div>
               <% if habit.completed_today? %>
                 <span class="badge-success">Выполнено ✅</span>
@@ -37,6 +44,7 @@
                 <%= button_to "Выполнено", complete_habit_path(habit), method: :patch, class: "btn btn-primary btn-sm" %>
               <% end %>
             </div>
+
           </div>
         <% end %>
       </div>

@@ -1,8 +1,8 @@
 <div class="page-container">
   <header class="page-header">
     <div class="page-header-left">
-        <%= back_button %>
-      <h1 class="page-header-title">📊 Альманах привычек</h1>
+      <%= back_button %>
+      <h1 class="page-header-title">📊 Альманах</h1>
     </div>
     <div class="page-header-left">
       <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
@@ -13,11 +13,43 @@
 
   <%= render "tabs" %>
 
-  <div class="garden-card">
-    <div class="empty-state">
-      <div class="empty-icon">📊</div>
-      <h2>Статистика появится позже</h2>
-      <p>Когда у тебя будут привычки, здесь появятся графики и инсайты</p>
-    </div>
+  <div class="garden-card" style="display: block;">
+    <% if @habits.any? %>
+      <div class="almanac-stats">
+        <div class="stat-box">
+          <div class="stat-value"><%= @habits.count %></div>
+          <div class="stat-label">Всего привычек</div>
+        </div>
+                <div class="stat-box">
+          <div class="stat-value">
+            <%= @habits.select(&:completed_today?).count %> / <%= @habits.count %>
+          </div>
+          <div class="stat-label">Выполнено сегодня</div>
+        </div>
+                <div class="stat-box">
+          <div class="stat-value"><%= @habits.reject(&:wilted?).count %></div>
+          <div class="stat-label">Активных</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: var(--space-lg); margin-bottom: var(--space-md);">🏆 Лучшие привычки</h3>
+      <% @habits.order(current_streak: :desc).limit(3).each do |habit| %>
+        <div class="habit-card" style="margin-bottom: var(--space-sm);">
+          <div class="habit-info">
+            <div class="plant-pot"><span class="plant"><%= habit.plant_emoji %></span></div>
+            <div>
+              <h3><%= habit.name %></h3>
+              <p class="text-muted text-small">Стрик: <%= habit.current_streak %> дней</p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <h2>Пока нет данных для статистики</h2>
+        <p>Создай привычки, чтобы увидеть прогресс</p>
+      </div>
+    <% end %>
   </div>
 </div>

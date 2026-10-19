@@ -10,7 +10,7 @@
     <div class="page-header-left">
       <button class="btn btn-primary btn-add" data-action="click->modal#open">
         <span>+</span>
-        <span class="btn-label">Добавить</span>
+        <span class="btn-label">Событие</span>
       </button>
       <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
         <%= (Current.user.name || Current.user.email_address).first.upcase %>
@@ -18,7 +18,7 @@
     </div>
   </header>
 
-  <%# Список событий %>
+  <%# Секция Событий %>
   <div class="day-events">
     <h2 class="day-section-title">📅 События</h2>
 
@@ -32,18 +32,55 @@
         </div>
       <% end %>
     <% else %>
-      <div class="empty-state">
-        <div class="empty-icon">📅</div>
-        <h2>На этот день пока ничего нет</h2>
-        <p>Добавь событие — оно появится здесь</p>
+      <div class="empty-state" style="padding: 30px;">
+        <div class="empty-icon" style="font-size: 32px;">📅</div>
+        <p>На этот день событий нет</p>
       </div>
     <% end %>
   </div>
 
-  <%# Модальное окно %>
-  <div class="modal-overlay"
-       data-modal-target="overlay"
-       data-action="click->modal#closeOnBackdrop">
+  <%# Секция Привычек %>
+  <div class="day-habits" style="margin-top: var(--space-xl);">
+    <h2 class="day-section-title">🌱 Мои привычки на сегодня</h2>
+
+    <% if @habits.any? %>
+      <div class="habits-list">
+        <% @habits.each do |habit| %>
+          <div class="habit-card <%= 'wilted' if habit.wilted? %>">
+            <div class="habit-info">
+              <div class="plant-pot">
+                <span class="plant"><%= habit.plant_emoji %></span>
+              </div>
+              <div>
+                <h3><%= habit.name %></h3>
+                <p class="text-muted text-small">
+                  Стрик: <%= habit.current_streak || 0 %> дней
+                </p>
+              </div>
+            </div>
+            
+            <div>
+              <% if habit.completed_today? %>
+                <span class="badge-success">Выполнено ✅</span>
+              <% else %>
+                <%# Передаем return_to, чтобы вернуться на эту страницу %>
+                <%= button_to "Выполнено", complete_habit_path(habit, return_to: day_path(@date)), method: :patch, class: "btn btn-primary btn-sm" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state" style="padding: 30px;">
+        <div class="empty-icon" style="font-size: 32px;">🌱</div>
+        <p>У тебя пока нет привычек. Создай их в Саду.</p>
+        <%= link_to "Перейти в Сад", garden_path, class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Модалка для создания события (остается без изменений) %>
+  <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#closeOnBackdrop">
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title">Новое событие</h2>
@@ -55,24 +92,22 @@
 
         <div class="form-field">
           <%= form.label :title, "Название" %>
-          <%= form.text_field :title, required: true, placeholder: "Например: Лекция по матану" %>
+          <%= form.text_field :title, required: true, placeholder: "Например: Лекция" %>
         </div>
 
         <div class="form-field">
           <%= form.label :description, "Описание (необязательно)" %>
-          <%= form.text_area :description, rows: 2, placeholder: "Детали" %>
+          <%= form.text_area :description, rows: 2 %>
         </div>
 
         <div class="form-field">
           <%= form.label :start_time, "Начало" %>
-          <%= form.time_field :start_time, 
-              value: "09:00", required: true, class: "form-input" %>
+          <%= form.time_field :start_time, value: "09:00", required: true %>
         </div>
 
         <div class="form-field">
           <%= form.label :end_time, "Окончание" %>
-          <%= form.time_field :end_time, 
-              value: "10:00", required: true, class: "form-input" %>
+          <%= form.time_field :end_time, value: "10:00", required: true %>
         </div>
 
         <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-lg);">

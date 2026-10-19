@@ -1,9 +1,26 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+HabitTemplate.create!([
+  {
+    name: "Медитация",
+    description: "10 минут осознанности",
+    benefits: "Снижает стресс, улучшает концентрацию",
+    icon: "🧘"
+  },
+  {
+    name: "Чтение",
+    description: "20 страниц в день",
+    benefits: "Развивает мышление, расширяет кругозор",
+    icon: "📚"
+  },
+  {
+    name: "Спорт",
+    description: "Утренняя зарядка",
+    benefits: "Укрепляет здоровье, даёт энергию",
+    icon: "🏃"
+  },
+  {
+    name: "Вода",
+    description: "2 литра в день",
+    benefits: "Улучшает кожу, помогает пищеварению",
+    icon: "💧"
+  }
+])

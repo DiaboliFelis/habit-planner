@@ -8,10 +8,15 @@ class HabitsController < ApplicationController
     end
   end
 
-  def complete
+    def complete
     @habit = Current.user.habits.find(params[:id])
     @habit.mark_as_completed!
-    redirect_to garden_path, notice: "Отлично! Привычка выполнена."
+    # Если пришел параметр return_to (с какой страницы пришли), возвращаем туда
+    if params[:return_to].present?
+      redirect_to params[:return_to], notice: "Отлично! Привычка выполнена."
+    else
+      redirect_to garden_path, notice: "Отлично! Привычка выполнена."
+    end
   end
 
   private
