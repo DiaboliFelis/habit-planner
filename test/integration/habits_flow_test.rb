@@ -96,4 +96,55 @@ class HabitsFlowTest < ActionDispatch::IntegrationTest
     # 4. Ожидаем 404 (Not Found), так как привычка не принадлежит текущему пользователю
     assert_response :not_found
   end
+
+  # ============================================================
+  # ДОПОЛНИТЕЛЬНЫЕ ОТВЕТВЛЕНИЯ
+  # ============================================================
+
+  test "нельзя создать привычку с частотой 0" do
+    post session_path, params: { email_address: @user.email_address, password: "password" }
+
+    assert_no_difference "Habit.count" do
+      post habits_path, params: { habit: { name: "Тест", frequency: 0 } }
+    end
+
+    assert_redirected_to garden_path
+    follow_redirect!
+    assert_select ".alert", text: /должна быть больше 0/
+  end
+
+  test "нельзя удалить привычку, если не вошёл" do
+    habit = habits(:one)
+
+    assert_no_difference "Habit.count" do
+      delete habit_path(habit)
+    end
+
+    assert_redirected_to new_session_path
+  end
+
+  test "увядание привычки отображается в интерфейсе" do
+    post session_path, params: { email_address: @user.email_address, password: "password" }
+
+    # Делаем привычку увядшей
+    @habit.update!(last_completed_at: 5.days.ago, current_streak: 3)
+
+    get garden_path
+    assert_response :success
+    assert_select ".habit-card.wilted", count: 1
+    assert_select ".habit-card.wilted .plant", text: "🥀"
+  end
+
+  test "нельзя редактировать чужую привычку" do
+    post session_path, params: { email_address: @user.email_address, password: "password" }
+
+    # Пытаемся удалить привычку второго пользователя
+    other_habit = @other_user.habits.create!(name: "Чужая", frequency: 1)
+
+    assert_no_difference "Habit.count" do
+      delete habit_path(other_habit)
+    end
+
+    assert_response :not_found
+  end
 end

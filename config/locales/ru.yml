@@ -81,3 +81,11 @@ ru:
               blank: "не может быть пустым"
             frequency:
               greater_than: "должна быть больше 0"
+        event:
+          attributes:
+            title:
+              blank: "не может быть пустым"
+            start_time:
+              blank: "не может быть пустым"
+            end_time:
+              blank: "не может быть пустым"
