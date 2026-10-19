@@ -65,14 +65,14 @@
 
         <div class="form-field">
           <%= form.label :start_time, "Начало" %>
-          <%= form.datetime_field :start_time, 
-              value: @date.strftime("%Y-%m-%dT09:00"), required: true %>
+          <%= form.time_field :start_time, 
+              value: "09:00", required: true, class: "form-input" %>
         </div>
 
         <div class="form-field">
           <%= form.label :end_time, "Окончание" %>
-          <%= form.datetime_field :end_time, 
-              value: @date.strftime("%Y-%m-%dT10:00"), required: true %>
+          <%= form.time_field :end_time, 
+              value: "10:00", required: true, class: "form-input" %>
         </div>
 
         <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-lg);">
