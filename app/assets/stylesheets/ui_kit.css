@@ -1010,3 +1010,93 @@ h3 { font-size: var(--font-size-lg); font-weight: 600; }
     display: none;
   }
 }
+
+/* ------------------------------------------------------------
+   22. КАРТОЧКИ ПРИВЫЧЕК (в Саду)
+   ------------------------------------------------------------ */
+.habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.habit-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md);
+  background: var(--color-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.habit-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.habit-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.habit-info h3 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+}
+
+.badge-success {
+  background: var(--color-success-light);
+  color: #276749;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: var(--font-size-sm);
+}
+
+/* Адаптив для карточек привычек */
+@media (max-width: 767px) {
+  .habit-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  
+  .habit-card > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .habit-info {
+    width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------
+   23. ГОРШОК С РАСТЕНИЕМ
+   ------------------------------------------------------------ */
+.plant-pot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: var(--color-bg);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+}
+.plant-pot .plant {
+  font-size: 28px;
+  line-height: 1;
+}

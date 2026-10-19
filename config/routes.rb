@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resource :calendar, only: [ :show ]
   resources :events, only: [ :create ]
+  resources :habits, only: [ :create ] do
+  member do
+    patch :complete
+  end
+end
   get "calendar/:date", to: "calendar#show", as: :calendar_day
   get "garden", to: "garden#index", as: :garden
   get "garden/laboratory", to: "garden#laboratory", as: :garden_laboratory

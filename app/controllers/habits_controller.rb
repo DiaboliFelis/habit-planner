@@ -1,7 +1,22 @@
 class HabitsController < ApplicationController
   def create
+    @habit = Current.user.habits.new(habit_params)
+    if @habit.save
+      redirect_to garden_path, notice: "Привычка создана!"
+    else
+      redirect_to garden_path, alert: @habit.errors.full_messages.join(", ")
+    end
   end
 
   def complete
+    @habit = Current.user.habits.find(params[:id])
+    @habit.mark_as_completed!
+    redirect_to garden_path, notice: "Отлично! Привычка выполнена."
+  end
+
+  private
+
+  def habit_params
+    params.require(:habit).permit(:name, :goal, :frequency)
   end
 end

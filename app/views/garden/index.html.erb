@@ -1,13 +1,13 @@
-<div class="page-container">
+<div class="page-container" data-controller="modal">
   <header class="page-header">
-  <div class="page-header-left">
-    <%= back_button %>
-    <h1 class="page-header-title">🌱 Сад привычек</h1>
-  </div>
-  <div class="page-header-left">
-      <button class="btn btn-primary" data-action="click->modal#open">
-  <span>+</span> <span class="btn-label">Добавить свою</span>
-</button>
+    <div class="page-header-left">
+      <%= back_button %>
+      <h1 class="page-header-title">🌱 Сад привычек</h1>
+    </div>
+    <div class="page-header-left">
+      <button class="btn btn-primary btn-add" data-action="click->modal#open">
+        <span>+</span> <span class="btn-label">Добавить</span>
+      </button>
       <button class="avatar" title="<%= Current.user.name || Current.user.email_address %>">
         <%= (Current.user.name || Current.user.email_address).first.upcase %>
       </button>
@@ -16,12 +16,65 @@
 
   <%= render "tabs" %>
 
-  <div class="garden-card">
-    <div class="empty-state">
-      <div class="empty-icon">🌱</div>
-      <h2>У тебя пока нет привычек</h2>
-      <p>Создай свою первую привычку или выбери из лаборатории</p>
-      <%= link_to "Открыть лабораторию", garden_laboratory_path, class: "btn btn-secondary" %>
+  <div class="garden-card" style="display: block;">
+    <% if @habits.any? %>
+      <div class="habits-list">
+        <% @habits.each do |habit| %>
+          <div class="habit-card">
+            <div class="habit-info">
+              <div class="plant-pot">
+                <span class="plant"><%= (habit.current_streak || 0) > 0 ? "🌿" : "🪴" %></span>
+              </div>
+              <div>
+                <h3><%= habit.name %></h3>
+                <p class="text-muted text-small">Стрик: <%= habit.current_streak || 0 %> дней</p>
+              </div>
+            </div>
+            <div>
+              <% if habit.completed_today? %>
+                <span class="badge-success">Выполнено ✅</span>
+              <% else %>
+                <%= button_to "Выполнено", complete_habit_path(habit), method: :patch, class: "btn btn-primary btn-sm" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <div class="empty-icon">🌱</div>
+        <h2>У тебя пока нет привычек</h2>
+        <p>Создай свою первую привычку!</p>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Модальное окно %>
+  <div class="modal-overlay" data-modal-target="overlay" data-action="click->modal#closeOnBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Новая привычка</h2>
+        <button class="modal-close" data-action="click->modal#close">×</button>
+      </div>
+
+      <%= form_with model: Habit.new, url: habits_path, method: :post, data: { turbo: false } do |form| %>
+        <div class="form-field">
+          <%= form.label :name, "Название" %>
+          <%= form.text_field :name, required: true, placeholder: "Например: Чтение" %>
+        </div>
+        <div class="form-field">
+          <%= form.label :goal, "Цель" %>
+          <%= form.text_field :goal, placeholder: "Например: 20 страниц" %>
+        </div>
+        <div class="form-field">
+          <%= form.label :frequency, "Частота (раз в день)" %>
+          <%= form.number_field :frequency, value: 1, min: 1 %>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary btn-block" data-action="click->modal#close">Отмена</button>
+          <%= form.submit "Создать", class: "btn btn-primary btn-block" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,26 +1,22 @@
-class EventsController < ApplicationController
+class HabitsController < ApplicationController
   def create
-    date = Date.parse(params[:date])
-    start_time = params[:event][:start_time]
-    end_time = params[:event][:end_time]
-    parsed_start = Time.zone.parse("#{date} #{start_time}")
-    parsed_end = Time.zone.parse("#{date} #{end_time}")
-
-    @event = Current.user.events.new(event_params.merge(
-      start_time: parsed_start,
-      end_time: parsed_end
-    ))
-
-    if @event.save
-      redirect_to day_path(date.strftime("%Y-%m-%d")), notice: "Событие добавлено"
+    @habit = Current.user.habits.new(habit_params)
+    if @habit.save
+      redirect_to garden_path, notice: "Привычка создана!"
     else
-      redirect_to day_path(date.strftime("%Y-%m-%d")), alert: @event.errors.full_messages.join(", ")
+      redirect_to garden_path, alert: @habit.errors.full_messages.join(", ")
     end
+  end
+
+  def complete
+    @habit = Current.user.habits.find(params[:id])
+    @habit.mark_as_completed!
+    redirect_to garden_path, notice: "Отлично! Привычка выполнена."
   end
 
   private
 
-  def event_params
-    params.require(:event).permit(:title, :description)
+  def habit_params
+    params.require(:habit).permit(:name, :goal, :frequency)
   end
 end
