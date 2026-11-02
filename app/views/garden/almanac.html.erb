@@ -20,13 +20,13 @@
           <div class="stat-value"><%= @habits.count %></div>
           <div class="stat-label">Всего привычек</div>
         </div>
-                <div class="stat-box">
+        <div class="stat-box">
           <div class="stat-value">
             <%= @habits.select(&:completed_today?).count %> / <%= @habits.count %>
           </div>
           <div class="stat-label">Выполнено сегодня</div>
         </div>
-                <div class="stat-box">
+        <div class="stat-box">
           <div class="stat-value"><%= @habits.reject(&:wilted?).count %></div>
           <div class="stat-label">Активных</div>
         </div>

@@ -4,10 +4,11 @@ class GardenController < ApplicationController
   end
 
   def laboratory
-    @templates = HabitTemplate.all
+    @templates = HabitTemplate.order(likes_count: :desc)
   end
 
   def almanac
     @habits = Current.user.habits
+    @templates = HabitTemplate.all
   end
 end

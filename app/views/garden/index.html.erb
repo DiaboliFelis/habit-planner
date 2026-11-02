@@ -1,5 +1,5 @@
 <div class="page-container" data-controller="modal">
-    <% if flash[:alert] %>
+  <% if flash[:alert] %>
     <div class="alert"><%= flash[:alert] %></div>
   <% end %>
   <% if flash[:notice] %>
@@ -44,7 +44,7 @@
               </div>
             </div>
 
-                         <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
               <% if habit.completed_today? %>
                 <span class="badge-success">Выполнено ✅</span>
               <% else %>

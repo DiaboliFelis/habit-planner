@@ -16,6 +16,7 @@
   <div class="garden-card" style="display: block;">
     <div class="habits-list">
       <% @templates.each do |template| %>
+        <%= turbo_stream_from "likes_template_#{template.id}" %>
         <div class="habit-card">
           <div class="habit-info">
             <div class="plant-pot"><span class="plant"><%= template.icon %></span></div>
@@ -25,7 +26,8 @@
               <p class="text-small" style="color: var(--color-success); margin-top: 4px;">✨ <%= template.benefits %></p>
             </div>
           </div>
-          <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <%= render partial: "habit_templates/likes", locals: { template: template } %>
             <%= button_to "Добавить", habits_path(habit: { name: template.name, goal: template.description, frequency: 1 }), method: :post, class: "btn btn-primary btn-sm" %>
           </div>
         </div>

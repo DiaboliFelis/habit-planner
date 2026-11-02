@@ -1,0 +1,13 @@
+<div id="<%= dom_id(template, :likes) %>" class="likes-container">
+  <% if template.liked_by_users.include?(Current.user) %>
+    <%# Лайк уже есть — показываем красное сердце и кнопку удаления %>
+    <%= button_to habit_template_template_like_path(template), method: :delete, class: "btn btn-like liked" do %>
+      ❤️ <%= template.likes_count %>
+    <% end %>
+  <% else %>
+    <%# Лайка нет — показываем пустое сердце и кнопку создания %>
+    <%= button_to habit_template_template_like_path(template), method: :post, class: "btn btn-like" do %>
+      🤍 <%= template.likes_count %>
+    <% end %>
+  <% end %>
+</div>

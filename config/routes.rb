@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     patch :complete
   end
 end
+  resources :habit_templates, only: [] do
+  resource :template_like, only: [ :create, :destroy ]
+end
   get "calendar/:date", to: "calendar#show", as: :calendar_day
   get "garden", to: "garden#index", as: :garden
   get "garden/laboratory", to: "garden#laboratory", as: :garden_laboratory
