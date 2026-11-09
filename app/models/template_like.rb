@@ -19,11 +19,11 @@ class TemplateLike < ApplicationRecord
   end
 
   def broadcast_like_update
-    habit_template.broadcast_replace_to(
-      "likes_template_#{habit_template.id}",
-      target: "likes_template_#{habit_template.id}_likes",
-      partial: "habit_templates/likes",
-      locals: { template: habit_template }
-    )
+  habit_template.broadcast_replace_to(
+    "likes_template_#{habit_template.id}",
+    target: "likes_habit_template_#{habit_template.id}", # <-- ИСПРАВЛЕНО
+    partial: "habit_templates/likes",
+   locals: { template: habit_template }
+  )
   end
 end
